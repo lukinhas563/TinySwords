@@ -14,19 +14,29 @@ export default class Enemy {
         //STATUS
         this.health = 3
         this.isAlive = true
+        this.inBattle = false
 
         //CREATED SPRITE
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
         this.sprite.setImmovable(true)
 
-        this.scene.time.addEvent({
-            delay: 3000,
-            callback: () => {
-                this.move(this.scene, this.moviment, this.stringSprite)
-            },
-            loop: true,
-            callbackScope: this
-        })
+        if (this.inBattle) {
+
+            console.log('FIGHT')
+            return
+
+        } else {
+
+            this.scene.time.addEvent({
+                delay: 3000,
+                callback: () => {
+                    this.move(this.scene, this.moviment, this.stringSprite)
+                },
+                loop: true,
+                callbackScope: this
+            })
+
+        }
 
         //CREATE FUNCTIONS
         this.createAnimate(scene, stringSprite)
@@ -81,8 +91,6 @@ export default class Enemy {
 
         }
 
-
-
     }
 
     move(scene, moviment, stringSprite) {
@@ -94,48 +102,57 @@ export default class Enemy {
         if (moviment && this.isAlive) {
 
 
-            const randNumber = Math.floor(Math.random() * 4 + 1)
+            if (this.inBattle) {
 
 
-            switch (randNumber) {
-                case 1:
-                    this.sprite.setFlipX(true)
-                    this.sprite.setVelocityX(-160)
-                    this.sprite.anims.play(stringSprite + 'right', true)
-                    break;
-                case 2:
-                    this.sprite.setFlipX(false)
-                    this.sprite.setVelocityX(160)
-                    this.sprite.anims.play(stringSprite + 'right', true)
-                    break;
-                case 3:
+                return
 
-                    this.sprite.setVelocityY(-160)
-                    this.sprite.anims.play(stringSprite + 'right', true)
-                    break;
-                case 4:
+            } else {
 
-                    this.sprite.setVelocityY(160)
-                    this.sprite.anims.play(stringSprite + 'right', true)
-                    break;
-                default:
-                    this.sprite.setFlipX(false)
-                    this.sprite.setVelocityX(160)
-                    this.sprite.anims.play(stringSprite + 'right', true)
+                const randNumber = Math.floor(Math.random() * 4 + 1)
+
+
+                switch (randNumber) {
+                    case 1:
+                        this.sprite.setFlipX(true)
+                        this.sprite.setVelocityX(-160)
+                        this.sprite.anims.play(stringSprite + 'right', true)
+                        break;
+                    case 2:
+                        this.sprite.setFlipX(false)
+                        this.sprite.setVelocityX(160)
+                        this.sprite.anims.play(stringSprite + 'right', true)
+                        break;
+                    case 3:
+
+                        this.sprite.setVelocityY(-160)
+                        this.sprite.anims.play(stringSprite + 'right', true)
+                        break;
+                    case 4:
+
+                        this.sprite.setVelocityY(160)
+                        this.sprite.anims.play(stringSprite + 'right', true)
+                        break;
+                    default:
+                        this.sprite.setFlipX(false)
+                        this.sprite.setVelocityX(160)
+                        this.sprite.anims.play(stringSprite + 'right', true)
+                }
+
+                scene.time.addEvent({
+                    delay: 500,
+                    callback: () => {
+
+                        this.sprite.setVelocityX(0)
+                        this.sprite.setVelocityY(0)
+
+                        this.sprite.anims.play(stringSprite + 'idle', true)
+                    },
+                    callbackScope: this
+                })
+
+
             }
-
-            scene.time.addEvent({
-                delay: 500,
-                callback: () => {
-
-                    this.sprite.setVelocityX(0)
-                    this.sprite.setVelocityY(0)
-
-                    this.sprite.anims.play(stringSprite + 'idle', true)
-                },
-                callbackScope: this
-            })
-
 
 
         } else {
@@ -155,7 +172,24 @@ export default class Enemy {
 
         }
 
+
         if (this.health > 0) {
+
+            let distance = Phaser.Math.Distance.Between(
+                this.sprite.x,
+                this.sprite.y,
+                this.scene.player.sprite.x,
+                this.scene.player.sprite.y,
+            )
+
+            if (distance <= 300) {
+
+                this.inBattle = true
+
+                this.chasePlayer(distance)
+
+            }
+
 
             this.npcText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
             this.npcText.setOrigin(0.5, 1)
@@ -171,6 +205,29 @@ export default class Enemy {
 
         }
 
+
+    }
+
+    chasePlayer(distance) {
+
+        const directionX = this.scene.player.sprite.x - this.sprite.x;
+        const directionY = this.scene.player.sprite.y - this.sprite.y;
+
+        if (directionX < 0) {
+            this.sprite.setFlipX(true)
+            this.sprite.anims.play(this.stringSprite + 'right', true)
+        } else {
+            this.sprite.setFlipX(false)
+            this.sprite.anims.play(this.stringSprite + 'right', true)
+        }
+
+        const length = Math.sqrt(directionX * directionX + directionY * directionY);
+        const normalizedDirectionX = directionX / length;
+        const normalizedDirectionY = directionY / length;
+        const speed = 100;
+
+        this.sprite.setVelocityX(normalizedDirectionX * speed);
+        this.sprite.setVelocityY(normalizedDirectionY * speed);
 
     }
 

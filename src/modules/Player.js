@@ -13,6 +13,7 @@ export default class Player {
 
         //STATUS
         this.health = 100
+        this.isAlive = true
 
         scene.events.on('npcCollision', (player) => {
 
@@ -59,9 +60,21 @@ export default class Player {
             repeat: -1
         })
 
+        scene.anims.create({
+            key: 'death',
+            frames: scene.anims.generateFrameNumbers('death', { start: 0, end: 13 }),
+            frameRate: 10,
+            repeat: 0
+        })
+
+
     }
 
     createMoviment() {
+
+        if (this.isAlive === false) {
+            return
+        }
 
         this.control = this.scene.input.keyboard.createCursorKeys()
 
@@ -153,13 +166,50 @@ export default class Player {
             this.playerText.destroy();
         }
 
-        this.playerText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
-        this.playerText.setOrigin(0.5, 1)
+        if (this.health > 0) {
+
+            this.playerText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
+            this.playerText.setOrigin(0.5, 1)
 
 
-        if (this.playerText) {
-            this.playerText.setPosition(this.sprite.x, this.sprite.y - 50);
+            if (this.playerText) {
+                this.playerText.setPosition(this.sprite.x, this.sprite.y - 50);
+            }
+
+        } else {
+
+            this.dead()
+
         }
+
+    }
+
+    dead() {
+
+        if (!this.isAlive) {
+            return
+        }
+
+        this.isAlive = false
+
+        this.sprite.anims.stop()
+        this.sprite.setVelocityX(0)
+        this.sprite.setVelocityY(0)
+
+        this.sprite.body.destroy()
+        this.playerText.destroy()
+
+        this.scene.deathSound.play()
+        this.sprite.anims.play('death', true)
+
+        this.scene.time.delayedCall(1300, () => {
+
+            console.log('DEAD')
+
+
+        }, [], this)
+
+
     }
 
 }
