@@ -22,7 +22,7 @@ const handleAttack = (scene, attacker, targets) => {
 
         })
 
-        let attackTimer = scene.time.addEvent({
+        scene.time.addEvent({
             delay: attackDelay,
             callback: attack(scene, attackHitBox, attacker, attacked, targets),
             loop: false,

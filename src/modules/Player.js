@@ -106,7 +106,6 @@ export default class Player {
 
             this.attackTimer.paused = false;
 
-
         } else if (this.control.space.isUp) {
 
             this.sprite.setVelocityX(0)

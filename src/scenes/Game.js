@@ -148,10 +148,10 @@ export default class Game extends Phaser.Scene {
         this.trees.createMoviment()
 
         //FOREGROUND
-        this.children.each(c => {
+        /*this.children.each(c => {
             const child = c
             child.setDepth(child.y)
-        })
+        })*/
 
     }
 }
