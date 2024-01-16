@@ -70,6 +70,9 @@ export default class Game extends Phaser.Scene {
         this.deathSound = this.sound.add('deathsound')
         this.deathSound.loop = false
 
+        this.torchSwing = this.sound.add('torchswing')
+        this.torchSwing.loop = false
+
         this.mainBattle = this.sound.add('mainbattle')
         this.mainBattle.loop = true
         this.mainBattle.play()
@@ -148,10 +151,10 @@ export default class Game extends Phaser.Scene {
         this.trees.createMoviment()
 
         //FOREGROUND
-        this.children.each(c => {
+        /*this.children.each(c => {
             const child = c
             child.setDepth(child.y)
-        })
+        })*/
 
     }
 }

@@ -45,6 +45,7 @@ export default class GameLoader extends Phaser.Scene {
         this.load.audio('hitheavy', 'assets/sounds/PUNCH_SQUELCH_HEAVY_01.wav')
         this.load.audio('deathsound', 'assets/sounds/Glyph Activation Light 01.wav')
         this.load.audio('mainbattle', 'assets/sounds/Arcade - Battle Network.ogg')
+        this.load.audio('torchswing', 'assets/sounds/fireball-whoosh-1-179125.mp3')
 
         this.load.on('complete', () => {
             this.scene.start('Game')

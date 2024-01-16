@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 
+import handleAttackEnemy from "./AttackEnemy";
+
 export default class Enemy {
 
     constructor(scene, stringSprite, posX, posY, moviment) {
@@ -18,13 +20,14 @@ export default class Enemy {
         this.isVulnerability = false
         this.isAttacking = false
 
-        //CREATED SPRITE
+        //CREATE SPRITE
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
         this.sprite.setImmovable(true)
 
         if (this.inBattle) {
 
-            console.log('FIGHT')
+            //ATTACK
+            this.possibleattack = scene.player.sprite
             return
 
         } else {
@@ -222,12 +225,15 @@ export default class Enemy {
         const normalizedDirectionY = directionY / length;
         const speed = 100;
 
-        if (distance <= 100 && !this.isAttacking) {
+        if (distance <= 100 && !this.isAttacking && !this.isVulnerability) {
 
             this.isAttacking = true
             this.sprite.setVelocityX(0);
             this.sprite.setVelocityY(0);
 
+
+            console.log('GOBLIN ATTACK')
+            this.scene.torchSwing.play()
             this.sprite.anims.play(this.stringSprite + 'attack', true)
 
             this.scene.time.delayedCall(700, () => {
@@ -236,7 +242,8 @@ export default class Enemy {
 
             })
 
-        } else if (distance > 100 && !this.isAttacking) {
+
+        } else if (distance > 100 && !this.isAttacking && !this.isVulnerability) {
 
             this.sprite.setVelocityX(normalizedDirectionX * speed);
             this.sprite.setVelocityY(normalizedDirectionY * speed);

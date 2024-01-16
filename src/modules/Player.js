@@ -15,6 +15,8 @@ export default class Player {
         this.health = 100
         this.isAlive = true
 
+        this.control = this.scene.input.keyboard.createCursorKeys()
+
         scene.events.on('npcCollision', (player) => {
 
             this.health -= 1
@@ -76,7 +78,6 @@ export default class Player {
             return
         }
 
-        this.control = this.scene.input.keyboard.createCursorKeys()
 
         const W = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
         const A = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
