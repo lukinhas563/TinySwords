@@ -9,7 +9,6 @@ const handleAttack = (scene, attacker, targets) => {
     let spacePressed = control.space.isDown
 
     if (!attacked && spacePressed) {
-        console.log('ATACOU')
 
         const attackHitBox = scene.add.rectangle(0, 0, 80, 110)
         scene.physics.add.existing(attackHitBox)
@@ -19,7 +18,7 @@ const handleAttack = (scene, attacker, targets) => {
 
         targets.forEach(target => {
 
-            scene.physics.add.overlap(attackHitBox, target.sprite, () => handleOverlap(target, scene))
+            scene.physics.add.overlap(attackHitBox, target.sprite, () => handleOverlap(target, scene, attacker))
 
         })
 
@@ -34,20 +33,30 @@ const handleAttack = (scene, attacker, targets) => {
 
 }
 
-const handleOverlap = (target, scene) => {
+const handleOverlap = (target, scene, attacker) => {
 
     if (!attacked) {
 
         scene.hitSound.play()
         target.health -= 1;
         attacked = true;
-        console.log('DAMAGE')
 
+        //RED GLOW
+        target.sprite.setTint(0xff0000)
 
-        scene.time.delayedCall(attackDelay, () => {
+        scene.time.delayedCall(100, () => {
+            target.sprite.clearTint()
             attacked = false;
         });
 
+        const pushForce = 600
+        const direction = Phaser.Math.Angle.BetweenPoints(attacker, target.sprite)
+        const pushVector = new Phaser.Math.Vector2(Math.cos(direction), Math.sin(direction)).scale(pushForce)
+        target.sprite.setVelocity(pushVector.x, pushVector.y)
+
+        scene.time.delayedCall(100, () => {
+            target.sprite.setVelocity(0, 0)
+        })
     }
 
 }

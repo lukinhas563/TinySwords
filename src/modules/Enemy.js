@@ -127,6 +127,7 @@ export default class Enemy {
             scene.time.addEvent({
                 delay: 500,
                 callback: () => {
+
                     this.sprite.setVelocityX(0)
                     this.sprite.setVelocityY(0)
 
@@ -180,7 +181,7 @@ export default class Enemy {
         }
 
         this.isAlive = false
-
+        this.sprite.clearTint()
         this.sprite.body.destroy()
         this.npcText.destroy()
 
