@@ -19,7 +19,7 @@ export default class Player {
 
         scene.events.on('npcCollision', (player) => {
 
-            this.health -= 1
+            console.log('COLLISION')
 
         })
 

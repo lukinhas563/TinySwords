@@ -24,10 +24,12 @@ export default class Enemy {
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
         this.sprite.setImmovable(true)
 
+        this.attackDelay = 300
+
+
         if (this.inBattle) {
 
-            //ATTACK
-            this.possibleattack = scene.player.sprite
+
             return
 
         } else {
@@ -231,10 +233,12 @@ export default class Enemy {
             this.sprite.setVelocityX(0);
             this.sprite.setVelocityY(0);
 
-
-            console.log('GOBLIN ATTACK')
             this.scene.torchSwing.play()
             this.sprite.anims.play(this.stringSprite + 'attack', true)
+
+            //ATTACK
+            this.possibleattack = this.scene.player.sprite
+            handleAttackEnemy(this.scene, this.sprite, this.possibleattack)
 
             this.scene.time.delayedCall(700, () => {
 
@@ -261,6 +265,18 @@ export default class Enemy {
             }
 
         }
+
+    }
+
+    restartTimerAttack() {
+
+        this.attackTimer = this.scene.time.addEvent({
+            delay: this.attackDelay,
+            callback: () => handleAttack(this.scene, this.sprite, this.possibleattack),
+            callbackScope: this,
+            loop: false,
+            paused: true
+        })
 
     }
 

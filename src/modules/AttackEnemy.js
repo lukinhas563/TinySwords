@@ -8,23 +8,22 @@ const handleAttackEnemy = (scene, attacker, target) => {
 
     if (!attacked) {
 
-        const enemyAttackHitbox = scene.add.rectangle(0, 0, 80, 110)
+        const enemyAttackHitbox = scene.add.rectangle(0, 0, 80, 110, '#000')
         scene.physics.add.existing(enemyAttackHitbox)
 
         enemyAttackHitbox.body.enable = true
         scene.physics.world.remove(enemyAttackHitbox.body)
 
 
-        console.log('DAMAGE', target)
-        scene.physics.add.overlap(enemyAttackHitbox, target, () => handleOverlap(target, scene, attacker))
+        // scene.physics.add.overlap(enemyAttackHitbox, target, () => handleOverlap(target, scene, attacker))
 
 
-        scene.time.addEvent({
-            delay: attackDelay,
-            callback: attack(scene, enemyAttackHitbox, attacker, attacked, target),
-            loop: false,
-            paused: true
-        })
+        /* scene.time.addEvent({
+             delay: attackDelay,
+             callback: attack(scene, enemyAttackHitbox, attacker, attacked, target),
+             loop: false,
+             paused: true
+         })*/
 
     }
 
