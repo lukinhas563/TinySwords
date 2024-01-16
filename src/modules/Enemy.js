@@ -16,6 +16,7 @@ export default class Enemy {
         this.isAlive = true
         this.inBattle = false
         this.isVulnerability = false
+        this.isAttacking = false
 
         //CREATED SPRITE
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
@@ -48,21 +49,21 @@ export default class Enemy {
 
         scene.anims.create({
             key: stringSprite + 'idle',
-            frames: scene.anims.generateFrameNumbers(stringSprite, { start: 0, end: 5 }),
+            frames: scene.anims.generateFrameNumbers(stringSprite, { start: 0, end: 6 }),
             frameRate: 10,
             repeat: -1
         })
 
         scene.anims.create({
             key: stringSprite + 'right',
-            frames: scene.anims.generateFrameNumbers(stringSprite, { start: 6, end: 11 }),
+            frames: scene.anims.generateFrameNumbers(stringSprite, { start: 7, end: 12 }),
             frameRate: 10,
             repeat: -1
         })
 
         scene.anims.create({
             key: stringSprite + 'attack',
-            frames: scene.anims.generateFrameNumbers(stringSprite, { start: 12, end: 17 }),
+            frames: scene.anims.generateFrameNumbers(stringSprite, { start: 14, end: 19 }),
             frameRate: 10,
             repeat: -1
         })
@@ -104,7 +105,6 @@ export default class Enemy {
 
 
             if (this.inBattle) {
-
 
                 return
 
@@ -189,8 +189,11 @@ export default class Enemy {
 
                 this.chasePlayer(distance)
 
-            }
+            } else {
 
+                this.inBattle = false
+
+            }
 
             this.npcText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
             this.npcText.setOrigin(0.5, 1)
@@ -214,24 +217,43 @@ export default class Enemy {
         const directionX = this.scene.player.sprite.x - this.sprite.x;
         const directionY = this.scene.player.sprite.y - this.sprite.y;
 
-        if (directionX < 0) {
-            this.sprite.setFlipX(true)
-            this.sprite.anims.play(this.stringSprite + 'right', true)
-        } else {
-            this.sprite.setFlipX(false)
-            this.sprite.anims.play(this.stringSprite + 'right', true)
-        }
-
         const length = Math.sqrt(directionX * directionX + directionY * directionY);
         const normalizedDirectionX = directionX / length;
         const normalizedDirectionY = directionY / length;
         const speed = 100;
 
-        if (!this.isVulnerability) {
+        if (distance <= 100 && !this.isAttacking) {
+
+            this.isAttacking = true
+            this.sprite.setVelocityX(0);
+            this.sprite.setVelocityY(0);
+
+            this.sprite.anims.play(this.stringSprite + 'attack', true)
+
+            this.scene.time.delayedCall(700, () => {
+
+                this.isAttacking = false
+
+            })
+
+        } else if (distance > 100 && !this.isAttacking) {
+
             this.sprite.setVelocityX(normalizedDirectionX * speed);
             this.sprite.setVelocityY(normalizedDirectionY * speed);
-        }
 
+            if (directionX < 0) {
+
+                this.sprite.setFlipX(true)
+                this.sprite.anims.play(this.stringSprite + 'right', true)
+
+            } else {
+
+                this.sprite.setFlipX(false)
+                this.sprite.anims.play(this.stringSprite + 'right', true)
+
+            }
+
+        }
 
     }
 
