@@ -169,6 +169,8 @@ export default class Npc {
         }
 
         this.isAlive = false
+
+        this.sprite.body.destroy()
         this.npcText.destroy()
 
         this.scene.deathSound.play()

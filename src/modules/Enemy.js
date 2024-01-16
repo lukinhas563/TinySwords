@@ -81,6 +81,8 @@ export default class Enemy {
 
         }
 
+
+
     }
 
     move(scene, moviment, stringSprite) {
@@ -179,6 +181,7 @@ export default class Enemy {
 
         this.isAlive = false
 
+        this.sprite.body.destroy()
         this.npcText.destroy()
 
         this.scene.deathSound.play()
