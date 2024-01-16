@@ -4,10 +4,13 @@ import Phaser from 'phaser'
 import GameLoader from './src/scenes/GameLoader'
 import Game from './src/scenes/Game'
 
+const tinyswords = document.querySelector('.tinyswords')
+
 const config = {
   type: Phaser.AUTO,
   width: 1220,
   height: 900,
+  parent: tinyswords,
   physics: {
     default: 'arcade',
     arcade: {
