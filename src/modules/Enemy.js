@@ -225,7 +225,7 @@ export default class Enemy {
         const length = Math.sqrt(directionX * directionX + directionY * directionY);
         const normalizedDirectionX = directionX / length;
         const normalizedDirectionY = directionY / length;
-        const speed = 100;
+        const speed = 140;
 
         if (distance <= 100 && !this.isAttacking && !this.isVulnerability) {
 
