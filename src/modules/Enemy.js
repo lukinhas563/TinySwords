@@ -12,9 +12,10 @@ export default class Enemy {
         this.posY = posY
 
         //STATUS
-        this.health = 3
+        this.health = 10
         this.isAlive = true
         this.inBattle = false
+        this.isVulnerability = false
 
         //CREATED SPRITE
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
@@ -226,8 +227,11 @@ export default class Enemy {
         const normalizedDirectionY = directionY / length;
         const speed = 100;
 
-        this.sprite.setVelocityX(normalizedDirectionX * speed);
-        this.sprite.setVelocityY(normalizedDirectionY * speed);
+        if (!this.isVulnerability) {
+            this.sprite.setVelocityX(normalizedDirectionX * speed);
+            this.sprite.setVelocityY(normalizedDirectionY * speed);
+        }
+
 
     }
 

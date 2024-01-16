@@ -40,6 +40,7 @@ const handleOverlap = (target, scene, attacker) => {
         scene.hitSound.play()
         target.health -= 1;
         attacked = true;
+        target.isVulnerability = true
 
         //RED GLOW
         target.sprite.setTint(0xff0000)
@@ -56,6 +57,7 @@ const handleOverlap = (target, scene, attacker) => {
 
         scene.time.delayedCall(100, () => {
             target.sprite.setVelocity(0, 0)
+            target.isVulnerability = false
         })
     }
 

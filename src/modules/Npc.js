@@ -14,6 +14,7 @@ export default class Npc {
         //STATUS
         this.health = 3
         this.isAlive = true
+        this.isVunerable = false
 
         //CREATED SPRITE
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
