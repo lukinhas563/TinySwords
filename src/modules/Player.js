@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import handleAttack from "./Attack";
 
 export default class Player {
+
     constructor(scene, stringSprite, posX, posY) {
 
         this.scene = scene
@@ -19,42 +20,19 @@ export default class Player {
 
         })
 
-        //ATTACK
-        this.swordHitbox = this.scene.add.rectangle(0, 0, 80, 110)
-        this.scene.physics.add.existing(this.swordHitbox)
-        this.swordHitbox.body.enable = true
-        scene.physics.world.remove(this.swordHitbox.body)
+        //SPRITE
+        this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 40).setOffset(70, 90)
+        this.createAnimate(scene, stringSprite)
 
+        //ATTACK
+        this.possibleattack = [scene.citizen, scene.goblin]
         this.attackDelay = 300
-        this.attackTimer = scene.time.addEvent({
+        this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
-            callback: this.attack,
-            callbackScope: this,
+            callback: () => handleAttack(this.scene, this.sprite, this.possibleattack),
             loop: false,
             paused: true
         })
-
-        const possibleattack = [scene.citizen, scene.goblin]
-
-        possibleattack.forEach(target => {
-
-            const attackOverlap = scene.physics.add.overlap(this.swordHitbox, target.sprite, () => {
-
-                if (!this.attacked) {
-                    this.scene.hitSound.play()
-                    target.health -= 1;
-                    this.attacked = true;
-                }
-            })
-
-        })
-
-        //SPRITE
-        this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 40).setOffset(70, 90)
-
-
-
-        this.createAnimate(scene, stringSprite)
 
     }
 
@@ -80,7 +58,6 @@ export default class Player {
             frameRate: 10,
             repeat: -1
         })
-
 
     }
 
@@ -124,18 +101,18 @@ export default class Player {
         } else if (this.control.space.isDown) {
 
             this.sprite.anims.play('attack1', true)
-            this.attackTimer.paused = false
             this.sprite.setVelocityX(0)
             this.sprite.setVelocityY(0)
 
-            return
+            this.attackTimer.paused = false;
 
-        } else if (this.control.space.isUp && this.attackTimer.getOverallProgress() < 1) {
+
+        } else if (this.control.space.isUp) {
 
             this.sprite.setVelocityX(0)
             this.sprite.setVelocityY(0)
             this.sprite.anims.play('idle', true)
-            this.attackTimer.paused = true;
+            this.attackTimer.paused = true
             this.restartTimerAttack()
 
         } else {
@@ -145,33 +122,7 @@ export default class Player {
             this.sprite.anims.play('idle', true)
 
             return
-
         }
-
-    }
-
-    attack() {
-
-        this.scene.physics.world.add(this.swordHitbox.body)
-
-        if (this.sprite.flipX) {
-            this.swordHitbox.x = this.sprite.x - this.sprite.width * 0.25
-        } else {
-            this.swordHitbox.x = this.sprite.x + this.sprite.width * 0.25
-        }
-        this.swordHitbox.y = this.sprite.y - this.sprite.height * 0.1
-
-        this.scene.time.delayedCall(100, () => {
-            this.swordHitbox.body.enable = false
-
-
-            this.scene.swingSound.play() //ARRUMAR
-
-
-            this.scene.physics.world.remove(this.swordHitbox.body)
-            this.attacked = false;
-        }, [], this)
-        this.restartTimerAttack()
 
     }
 
@@ -179,11 +130,12 @@ export default class Player {
 
         this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
-            callback: this.attack,
+            callback: () => handleAttack(this.scene, this.sprite, this.possibleattack),
             callbackScope: this,
             loop: false,
             paused: true
         })
+
     }
 
     createCollision(scene, colliders) {

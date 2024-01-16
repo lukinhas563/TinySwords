@@ -5,41 +5,54 @@ const attackDelay = 300
 
 const handleAttack = (scene, attacker, targets) => {
 
-    if (!scene || !attacker || !targets) {
+    const control = scene.input.keyboard.createCursorKeys()
+    let spacePressed = control.space.isDown
 
-        return
-    }
+    if (!attacked && spacePressed) {
+        console.log('ATACOU')
 
-    const attackHitBox = scene.scene.add.rectangle(0, 0, 80, 110)
-    scene.physics.add.existing(attackHitBox)
-    attackHitBox.body.enable = true
-    scene.physics.world.remove(attackHitBox.body)
+        const attackHitBox = scene.add.rectangle(0, 0, 80, 110)
+        scene.physics.add.existing(attackHitBox)
 
-    targets.forEach(target => {
+        attackHitBox.body.enable = true
+        scene.physics.world.remove(attackHitBox.body)
 
-        const attackOverlap = scene.physics.add.overlap(attackHitBox, target.sprite, () => {
+        targets.forEach(target => {
 
-            if (!attacked) {
-                scene.hitSound.play()
-                target.health -= 1;
-                attacked = true;
-            }
+            scene.physics.add.overlap(attackHitBox, target.sprite, () => handleOverlap(target, scene))
 
         })
 
-    })
+        let attackTimer = scene.time.addEvent({
+            delay: attackDelay,
+            callback: attack(scene, attackHitBox, attacker, attacked, targets),
+            loop: false,
+            paused: true
+        })
 
-
-    const attackTimer = scene.time.addEvent({
-        delay: attackDelay,
-        callback: attack(scene, attackHitBox, attacker, attacked),
-        loop: false,
-        paused: true
-    })
+    }
 
 }
 
-const attack = (scene, attackHitBox, attacker, attacked) => {
+const handleOverlap = (target, scene) => {
+
+    if (!attacked) {
+
+        scene.hitSound.play()
+        target.health -= 1;
+        attacked = true;
+        console.log('DAMAGE')
+
+
+        scene.time.delayedCall(attackDelay, () => {
+            attacked = false;
+        });
+
+    }
+
+}
+
+const attack = (scene, attackHitBox, attacker, attacked, targets) => {
 
     scene.physics.world.add(attackHitBox.body)
 
@@ -56,29 +69,22 @@ const attack = (scene, attackHitBox, attacker, attacked) => {
     attackHitBox.y = attacker.y - attacker.height * 0.1
 
     scene.time.delayedCall(100, () => {
+
         attackHitBox.body.enable = false
-
-
-        scene.swingSound.play() //ARRUMAR
-
-
+        scene.swingSound.play()
         scene.physics.world.remove(attackHitBox.body)
+
         attacked = false;
 
     }, [], this)
 
-    restartTimerAttack()
 
-}
-
-const restartTimerAttack = () => {
-
-    attackTimer = scene.time.addEvent({
-        delay: attackDelay,
-        callback: attack,
+    scene.time.addEvent({
+        delay: 600,
+        callback: () => { handleAttack(scene, attacker, targets) },
         loop: false,
-        paused: true
     })
+
 }
 
 export default handleAttack
