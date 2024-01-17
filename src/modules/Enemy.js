@@ -14,30 +14,35 @@ export default class Enemy {
         this.posX = posX
         this.posY = posY
 
-        //STATUS
-        this.health = 10
-        this.isAlive = true
-        this.inBattle = false
-        this.isVulnerability = false
-        this.isAttacking = false
-
         //CREATE SPRITE
         this.enemyGroup = scene.physics.add.group()
         this.enemySpawn.objects.forEach(spawn => {
-            this.sprite = this.enemyGroup.create(spawn.x, spawn.y, stringSprite).setSize(50, 30).setOffset(70, 90)
-            this.sprite.setPushable(false)
+
+            const enemy = scene.physics.add.sprite(spawn.x, spawn.y, stringSprite).setSize(50, 30).setOffset(70, 90)
+            enemy.setPushable(false)
+
+            //STATUS
+            enemy.health = 10
+            enemy.isAlive = true
+            enemy.inBattle = false
+            enemy.isVulnerability = false
+            enemy.isAttacking = false
+
+            enemy.attackDelay = 300
+            enemy.attackTimer = this.scene.time.addEvent({
+                delay: enemy.attackDelay,
+                callback: () => handleAttackEnemy(this.scene, enemy, this.scene.player),
+                loop: false,
+                paused: true
+            })
+
+            // ADD ENEMY TO GROUP
+            this.enemyGroup.add(enemy)
+
         })
 
+        console.log(this.enemyGroup)
         //this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
-
-        this.attackDelay = 300
-        this.attackTimer = this.scene.time.addEvent({
-            delay: this.attackDelay,
-            callback: () => handleAttackEnemy(this.scene, this.sprite, this.scene.player),
-            loop: false,
-            paused: true
-        })
-
 
         if (this.inBattle) {
 
@@ -114,20 +119,19 @@ export default class Enemy {
 
     move(scene, moviment, stringSprite) {
 
-        if (this.isAlive === false) {
-            return
-        }
+        this.enemyGroup.children.iterate(enemy => {
 
-        if (moviment && this.isAlive) {
-
-
-            if (this.inBattle) {
-
+            if (enemy.isAlive === false) {
                 return
+            }
 
-            } else {
+            if (moviment && enemy.isAlive) {
 
-                this.enemyGroup.children.iterate(enemy => {
+                if (enemy.inBattle) {
+
+                    return
+
+                } else {
 
                     const randNumber = Math.floor(Math.random() * 4 + 1)
 
@@ -171,116 +175,117 @@ export default class Enemy {
                         callbackScope: this
                     })
 
-                })
+                }
 
-            }
-
-        } else {
-
-            this.enemyGroup.children.iterate(enemy => {
+            } else {
 
                 enemy.anims.play(stringSprite + 'idle', true)
 
-            })
+                return
+            }
 
-            return
-        }
+        })
+
 
     }
 
     status() {
 
-        if (this.npcText) {
+        this.enemyGroup.children.iterate(enemy => {
 
-            this.npcText.destroy();
+            if (enemy.npcText) {
 
-        }
+                enemy.npcText.destroy();
+
+            }
 
 
-        if (this.health > 0) {
+            if (enemy.health > 0) {
 
-            let distance = Phaser.Math.Distance.Between(
-                this.sprite.x,
-                this.sprite.y,
-                this.scene.player.sprite.x,
-                this.scene.player.sprite.y,
-            )
 
-            if (distance <= 300) {
+                let distance = Phaser.Math.Distance.Between(
+                    enemy.x,
+                    enemy.y,
+                    this.scene.player.sprite.x,
+                    this.scene.player.sprite.y,
+                )
 
-                this.inBattle = true
+                if (distance <= 300) {
 
-                this.chasePlayer(distance)
+                    enemy.inBattle = true
+
+                    this.chasePlayer(distance, enemy)
+
+                } else {
+
+                    enemy.inBattle = false
+
+                }
+
+                enemy.npcText = this.scene.add.text(enemy.posX, enemy.posY, `Helth: ${enemy.health}`, { fontSize: '30px', fill: '#fff' })
+                enemy.npcText.setOrigin(0.5, 1)
+
+                if (enemy.npcText) {
+                    enemy.npcText.setPosition(enemy.x, enemy.y - 50);
+                }
+
 
             } else {
 
-                this.inBattle = false
+                this.dead(enemy)
 
             }
 
-            this.npcText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
-            this.npcText.setOrigin(0.5, 1)
-
-            if (this.npcText) {
-                this.npcText.setPosition(this.sprite.x, this.sprite.y - 50);
-            }
-
-
-        } else {
-
-            this.dead()
-
-        }
-
+        })
 
     }
 
-    chasePlayer(distance) {
+    chasePlayer(distance, enemy) {
 
-        const directionX = this.scene.player.sprite.x - this.sprite.x;
-        const directionY = this.scene.player.sprite.y - this.sprite.y;
+        const directionX = this.scene.player.sprite.x - enemy.x;
+        const directionY = this.scene.player.sprite.y - enemy.y;
 
         const length = Math.sqrt(directionX * directionX + directionY * directionY);
         const normalizedDirectionX = directionX / length;
         const normalizedDirectionY = directionY / length;
         const speed = 140;
 
-        if (distance <= 100 && !this.isAttacking && !this.isVulnerability) {
+        if (distance <= 100 && !enemy.isAttacking && !enemy.isVulnerability) {
 
-            this.isAttacking = true
-            this.sprite.setVelocityX(0);
-            this.sprite.setVelocityY(0);
+            enemy.isAttacking = true
+            enemy.setVelocityX(0);
+            enemy.setVelocityY(0);
 
             this.scene.torchSwing.play()
-            this.sprite.anims.play(this.stringSprite + 'attack', true)
+            enemy.anims.play(this.stringSprite + 'attack', true)
 
             //ATTACK
             this.possibleattack = this.scene.player.sprite
 
-            this.attackTimer.paused = false
+            // this.attackTimer.paused = false
 
             this.scene.time.delayedCall(700, () => {
 
-                this.isAttacking = false
-                this.restartTimerAttack()
+                enemy.isAttacking = false
+                this.restartTimerAttack(enemy)
 
             })
 
 
-        } else if (distance > 100 && !this.isAttacking && !this.isVulnerability) {
+        } else if (distance > 100 && !enemy.isAttacking && !enemy.isVulnerability) {
 
-            this.sprite.setVelocityX(normalizedDirectionX * speed);
-            this.sprite.setVelocityY(normalizedDirectionY * speed);
+            enemy.setVelocityX(normalizedDirectionX * speed);
+            enemy.setVelocityY(normalizedDirectionY * speed);
 
             if (directionX < 0) {
 
-                this.sprite.setFlipX(true)
-                this.sprite.anims.play(this.stringSprite + 'right', true)
+                enemy.setFlipX(true)
+                enemy.anims.play(this.stringSprite + 'right', true)
 
             } else {
 
-                this.sprite.setFlipX(false)
-                this.sprite.anims.play(this.stringSprite + 'right', true)
+                enemy.setFlipX(false)
+                enemy.anims.play(this.stringSprite + 'right', true)
 
             }
 
@@ -288,34 +293,34 @@ export default class Enemy {
 
     }
 
-    restartTimerAttack() {
+    restartTimerAttack(enemy) {
 
         this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
-            callback: () => handleAttackEnemy(this.scene, this.sprite, this.scene.player.sprite),
+            callback: () => handleAttackEnemy(this.scene, enemy, this.scene.player.sprite),
             loop: false,
             paused: true
         })
 
     }
 
-    dead() {
+    dead(enemy) {
 
-        if (!this.isAlive) {
+        if (!enemy.isAlive) {
             return
         }
 
-        this.isAlive = false
-        this.sprite.clearTint()
-        this.sprite.body.destroy()
-        this.npcText.destroy()
+        enemy.isAlive = false
+        enemy.sprite.clearTint()
+        enemy.sprite.body.destroy()
+        enemy.npcText.destroy()
 
         this.scene.deathSound.play()
-        this.sprite.anims.play(this.stringSprite + 'death', true)
+        enemy.anims.play(this.stringSprite + 'death', true)
 
         this.scene.time.delayedCall(1300, () => {
 
-            this.sprite.destroy()
+            enemy.destroy()
 
         }, [], this)
 

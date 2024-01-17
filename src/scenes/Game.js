@@ -127,13 +127,13 @@ export default class Game extends Phaser.Scene {
 
         this.player.createCollision(this, this.colliders)
         this.player.createCollision(this, this.citizen.sprite)
-        this.player.createCollision(this, this.goblin.sprite)
 
         this.citizen.createCollision(this, this.colliders)
         this.goblin.createCollision(this, this.colliders)
+        this.goblin.createCollision(this, this.player.sprite)
 
         this.trees.createCollision(this, this.player.sprite)
-        this.trees.createCollision(this, this.goblin.sprite)
+        this.trees.createGroupCollision(this, this.goblin.enemyGroup)
         this.trees.createCollision(this, this.citizen.sprite)
 
         this.houses.createCollision(this, this.player.sprite)
@@ -175,10 +175,10 @@ export default class Game extends Phaser.Scene {
         this.trees.createMoviment()
 
         //FOREGROUND
-        this.children.each(c => {
+        /*this.children.each(c => {
             const child = c
             child.setDepth(child.y)
-        })
+        })*/
 
     }
 }

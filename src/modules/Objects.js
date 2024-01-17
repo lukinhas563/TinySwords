@@ -57,4 +57,20 @@ export default class Objects {
 
     }
 
+    createGroupCollision(scene, colliders) {
+
+        this.objectGroup.children.iterate(object => {
+
+            console.log('Arvore: ')
+
+            colliders.children.iterate((collider) => {
+
+                scene.physics.add.collider(object, collider)
+
+            })
+
+        })
+
+    }
+
 }
