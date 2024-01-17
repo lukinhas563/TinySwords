@@ -14,7 +14,7 @@ export default class Player {
         //STATUS
         this.health = 100
         this.isAlive = true
-
+        this.isVulnerability = false
         this.control = this.scene.input.keyboard.createCursorKeys()
 
         scene.events.on('npcCollision', (player) => {
@@ -74,7 +74,7 @@ export default class Player {
 
     createMoviment() {
 
-        if (this.isAlive === false) {
+        if (this.isAlive === false || this.isVulnerability === true) {
             return
         }
 

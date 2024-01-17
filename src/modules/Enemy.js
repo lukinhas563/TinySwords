@@ -25,6 +25,12 @@ export default class Enemy {
         this.sprite.setImmovable(true)
 
         this.attackDelay = 300
+        this.attackTimer = this.scene.time.addEvent({
+            delay: this.attackDelay,
+            callback: () => handleAttackEnemy(this.scene, this.sprite, this.scene.player),
+            loop: false,
+            paused: true
+        })
 
 
         if (this.inBattle) {
@@ -238,11 +244,13 @@ export default class Enemy {
 
             //ATTACK
             this.possibleattack = this.scene.player.sprite
-            handleAttackEnemy(this.scene, this.sprite, this.possibleattack)
+
+            this.attackTimer.paused = false
 
             this.scene.time.delayedCall(700, () => {
 
                 this.isAttacking = false
+                this.restartTimerAttack()
 
             })
 
@@ -272,8 +280,7 @@ export default class Enemy {
 
         this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
-            callback: () => handleAttack(this.scene, this.sprite, this.possibleattack),
-            callbackScope: this,
+            callback: () => handleAttackEnemy(this.scene, this.sprite, this.scene.player.sprite),
             loop: false,
             paused: true
         })
