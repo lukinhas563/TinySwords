@@ -47,12 +47,12 @@ export default class Objects {
 
     }
 
-    createCollision(scene, player, citizen, goblin) {
+    createCollision(scene, collider) {
 
 
         this.objectGroup.children.iterate(object => {
 
-            scene.physics.add.collider(object, player)
+            scene.physics.add.collider(object, collider)
 
         })
 

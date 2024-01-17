@@ -78,6 +78,7 @@ export default class Player {
             return
         }
 
+        let isAttacking = false
 
         const W = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
         const A = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
@@ -120,6 +121,7 @@ export default class Player {
 
             this.attackTimer.paused = false;
 
+
         } else if (this.control.space.isUp) {
 
             this.sprite.setVelocityX(0)
@@ -127,6 +129,7 @@ export default class Player {
             this.sprite.anims.play('idle', true)
             this.attackTimer.paused = true
             this.restartTimerAttack()
+
 
         } else {
 
@@ -151,13 +154,9 @@ export default class Player {
 
     }
 
-    createCollision(scene, colliders) {
+    createCollision(scene, collider) {
 
-        for (let i = 0; i < colliders.length; i++) {
-
-            scene.physics.add.collider(this.sprite, colliders[i])
-
-        }
+        scene.physics.add.collider(this.sprite, collider)
 
     }
 

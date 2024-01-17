@@ -66,22 +66,16 @@ export default class Npc {
 
     }
 
-    createCollision(scene, colliders) {
+    createCollision(scene, collider) {
 
+        /* scene.physics.add.collider(this.sprite, colliders[2], () => {
+ 
+             scene.events.emit('npcCollision', this.sprite);
+ 
+ 
+         })*/
 
-        scene.physics.add.collider(this.sprite, colliders[2], () => {
-
-            scene.events.emit('npcCollision', this.sprite);
-
-
-        })
-
-        for (let i = 0; i < colliders.length; i++) {
-
-            scene.physics.add.collider(this.sprite, colliders[i])
-
-        }
-
+        scene.physics.add.collider(this.sprite, collider)
 
     }
 
