@@ -4,11 +4,12 @@ import handleAttackEnemy from "./AttackEnemy";
 
 export default class Enemy {
 
-    constructor(scene, stringSprite, posX, posY, moviment) {
+    constructor(scene, stringSprite, posX, posY, moviment, map) {
 
         this.scene = scene
         this.stringSprite = stringSprite
         this.moviment = moviment
+        this.enemySpawn = map.getObjectLayer('EnemySpawn')
 
         this.posX = posX
         this.posY = posY
@@ -21,8 +22,13 @@ export default class Enemy {
         this.isAttacking = false
 
         //CREATE SPRITE
-        this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
-        this.sprite.setPushable(false)
+        this.enemyGroup = scene.physics.add.group()
+        this.enemySpawn.objects.forEach(spawn => {
+            this.sprite = this.enemyGroup.create(spawn.x, spawn.y, stringSprite).setSize(50, 30).setOffset(70, 90)
+            this.sprite.setPushable(false)
+        })
+
+        //this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
 
         this.attackDelay = 300
         this.attackTimer = this.scene.time.addEvent({
@@ -48,6 +54,7 @@ export default class Enemy {
                 loop: true,
                 callbackScope: this
             })
+
 
         }
 
@@ -97,7 +104,11 @@ export default class Enemy {
 
         })*/
 
-        scene.physics.add.collider(this.sprite, collider)
+        this.enemyGroup.children.iterate(enemy => {
+
+            scene.physics.add.collider(enemy, collider)
+
+        })
 
     }
 
@@ -116,57 +127,63 @@ export default class Enemy {
 
             } else {
 
-                const randNumber = Math.floor(Math.random() * 4 + 1)
+                this.enemyGroup.children.iterate(enemy => {
+
+                    const randNumber = Math.floor(Math.random() * 4 + 1)
 
 
-                switch (randNumber) {
-                    case 1:
-                        this.sprite.setFlipX(true)
-                        this.sprite.setVelocityX(-160)
-                        this.sprite.anims.play(stringSprite + 'right', true)
-                        break;
-                    case 2:
-                        this.sprite.setFlipX(false)
-                        this.sprite.setVelocityX(160)
-                        this.sprite.anims.play(stringSprite + 'right', true)
-                        break;
-                    case 3:
+                    switch (randNumber) {
+                        case 1:
+                            enemy.setFlipX(true)
+                            enemy.setVelocityX(-160)
+                            enemy.anims.play(stringSprite + 'right', true)
+                            break;
+                        case 2:
+                            enemy.setFlipX(false)
+                            enemy.setVelocityX(160)
+                            enemy.anims.play(stringSprite + 'right', true)
+                            break;
+                        case 3:
 
-                        this.sprite.setVelocityY(-160)
-                        this.sprite.anims.play(stringSprite + 'right', true)
-                        break;
-                    case 4:
+                            enemy.setVelocityY(-160)
+                            enemy.anims.play(stringSprite + 'right', true)
+                            break;
+                        case 4:
 
-                        this.sprite.setVelocityY(160)
-                        this.sprite.anims.play(stringSprite + 'right', true)
-                        break;
-                    default:
-                        this.sprite.setFlipX(false)
-                        this.sprite.setVelocityX(160)
-                        this.sprite.anims.play(stringSprite + 'right', true)
-                }
+                            enemy.setVelocityY(160)
+                            enemy.anims.play(stringSprite + 'right', true)
+                            break;
+                        default:
+                            enemy.setFlipX(false)
+                            enemy.setVelocityX(160)
+                            enemy.anims.play(stringSprite + 'right', true)
+                    }
 
-                scene.time.addEvent({
-                    delay: 500,
-                    callback: () => {
+                    scene.time.addEvent({
+                        delay: 500,
+                        callback: () => {
 
-                        this.sprite.setVelocityX(0)
-                        this.sprite.setVelocityY(0)
+                            enemy.setVelocityX(0)
+                            enemy.setVelocityY(0)
 
-                        this.sprite.anims.play(stringSprite + 'idle', true)
-                    },
-                    callbackScope: this
+                            enemy.anims.play(stringSprite + 'idle', true)
+                        },
+                        callbackScope: this
+                    })
+
                 })
-
 
             }
 
-
         } else {
 
-            this.sprite.anims.play(stringSprite + 'idle', true)
-            return
+            this.enemyGroup.children.iterate(enemy => {
 
+                enemy.anims.play(stringSprite + 'idle', true)
+
+            })
+
+            return
         }
 
     }

@@ -755,7 +755,54 @@
                  "visible":true,
                  "width":0,
                  "x":412,
-                 "y":317.333333333333
+                 "y":317.333
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "id":35,
+         "name":"EnemySpawn",
+         "objects":[
+                {
+                 "height":0,
+                 "id":27,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1326,
+                 "y":460
+                }, 
+                {
+                 "height":0,
+                 "id":28,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1282,
+                 "y":772
+                }, 
+                {
+                 "height":0,
+                 "id":29,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1724,
+                 "y":862
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -763,8 +810,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":35,
- "nextobjectid":27,
+ "nextlayerid":36,
+ "nextobjectid":30,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.2",

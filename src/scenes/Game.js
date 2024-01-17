@@ -79,7 +79,7 @@ export default class Game extends Phaser.Scene {
         this.citizen = new Npc(this, 'citizen', 1000, 400, true)
 
         //ENEMYS
-        this.goblin = new Enemy(this, 'goblin_torch', 1300, 500, true)
+        this.goblin = new Enemy(this, 'goblin_torch', 1300, 500, true, map)
 
         //CHARACTER
         this.player = new Player(this, 'player', 250, 700)

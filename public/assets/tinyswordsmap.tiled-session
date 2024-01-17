@@ -17,10 +17,10 @@
         },
         "tinyswordsmap.tmx": {
             "scale": 0.5,
-            "selectedLayer": 15,
+            "selectedLayer": 21,
             "viewCenter": {
-                "x": 656,
-                "y": 571
+                "x": 1460,
+                "y": 781
             }
         },
         "tinyswordsmap.tmx#Bridge": {
