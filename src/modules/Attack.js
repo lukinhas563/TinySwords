@@ -1,12 +1,14 @@
 import Phaser from "phaser";
 
 let attacked = false
+let currentAttack = false;
 const attackDelay = 300
 
 const handleAttack = (scene, attacker, targets) => {
 
     const control = scene.input.keyboard.createCursorKeys()
     let spacePressed = control.space.isDown
+
 
     if (!attacked && spacePressed) {
 
@@ -29,7 +31,6 @@ const handleAttack = (scene, attacker, targets) => {
 
                         handleOverlap(individualTarget, scene, attacker)
 
-
                     })
                 })
 
@@ -45,17 +46,18 @@ const handleAttack = (scene, attacker, targets) => {
 
         })
 
-
         scene.time.delayedCall(0, () => {
             attack(scene, attackHitBox, attacker, attacked, targets)
         })
 
-
         scene.time.delayedCall(100, () => {
             attacked = false
+
         })
 
+        attacked = true;
     }
+
 
 }
 
@@ -147,6 +149,7 @@ const attack = (scene, attackHitBox, attacker, attacked, targets) => {
         callback: () => {
 
             handleAttack(scene, attacker, targets)
+
         },
         loop: false,
     })

@@ -118,11 +118,11 @@ export default class Player {
             this.sprite.anims.play('attack1', true)
             this.sprite.setVelocityX(0)
             this.sprite.setVelocityY(0)
-
             this.attackTimer.paused = false;
 
 
         } else if (this.control.space.isUp) {
+
 
             this.sprite.setVelocityX(0)
             this.sprite.setVelocityY(0)
