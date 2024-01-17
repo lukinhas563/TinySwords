@@ -113,7 +113,7 @@ export default class Game extends Phaser.Scene {
         this.collider.setCollisionByProperty({ collider: true })
         this.collider1.setCollisionByProperty({ collider: true })
 
-        this.colliders = [this.collider, this.collider1, this.trees.objectGroup]
+        this.colliders = [this.collider, this.collider1]
 
         this.player.createCollision(this, this.colliders)
         this.player.createCollision(this, this.citizen.sprite)
