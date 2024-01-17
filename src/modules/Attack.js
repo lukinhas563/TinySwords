@@ -16,9 +16,22 @@ const handleAttack = (scene, attacker, targets) => {
         attackHitBox.body.enable = true
         scene.physics.world.remove(attackHitBox.body)
 
+
         targets.forEach(target => {
 
-            scene.physics.add.overlap(attackHitBox, target.sprite, () => handleOverlap(target, scene, attacker))
+
+            if (target instanceof Phaser.GameObjects.Group) {
+
+                target.children.iterate((individualTarget) => {
+                    scene.physics.add.overlap(attackHitBox, individualTarget, () => handleOverlap(individualTarget, scene, attacker))
+                })
+
+            } else {
+
+                scene.physics.add.overlap(attackHitBox, target.sprite, () => handleOverlap(target, scene, attacker))
+
+            }
+
 
         })
 
@@ -36,6 +49,7 @@ const handleAttack = (scene, attacker, targets) => {
 const handleOverlap = (target, scene, attacker) => {
 
     if (!attacked) {
+        console.log(target.health)
 
         scene.hitSound.play()
         target.health -= 1;
@@ -43,22 +57,48 @@ const handleOverlap = (target, scene, attacker) => {
         target.isVulnerability = true
 
         //RED GLOW
-        target.sprite.setTint(0xff0000)
 
-        scene.time.delayedCall(100, () => {
-            target.sprite.clearTint()
-            attacked = false;
-        });
+        if (target.sprite) {
 
-        const pushForce = 600
-        const direction = Phaser.Math.Angle.BetweenPoints(attacker, target.sprite)
-        const pushVector = new Phaser.Math.Vector2(Math.cos(direction), Math.sin(direction)).scale(pushForce)
-        target.sprite.setVelocity(pushVector.x, pushVector.y)
+            target.sprite.setTint(0xff0000)
 
-        scene.time.delayedCall(100, () => {
-            target.sprite.setVelocity(0, 0)
-            target.isVulnerability = false
-        })
+            scene.time.delayedCall(100, () => {
+                target.sprite.clearTint()
+                attacked = false;
+            });
+
+            const pushForce = 600
+            const direction = Phaser.Math.Angle.BetweenPoints(attacker, target.sprite)
+            const pushVector = new Phaser.Math.Vector2(Math.cos(direction), Math.sin(direction)).scale(pushForce)
+            target.sprite.setVelocity(pushVector.x, pushVector.y)
+
+
+            scene.time.delayedCall(100, () => {
+                target.sprite.setVelocity(0, 0)
+                target.isVulnerability = false
+            })
+
+        } else {
+
+            target.setTint(0xff0000)
+
+            scene.time.delayedCall(100, () => {
+                target.clearTint()
+                attacked = false;
+            });
+
+            const pushForce = 600
+            const direction = Phaser.Math.Angle.BetweenPoints(attacker, target)
+            const pushVector = new Phaser.Math.Vector2(Math.cos(direction), Math.sin(direction)).scale(pushForce)
+            target.setVelocity(pushVector.x, pushVector.y)
+
+            scene.time.delayedCall(100, () => {
+                target.setVelocity(0, 0)
+                target.isVulnerability = false
+            })
+
+        }
+
     }
 
 }

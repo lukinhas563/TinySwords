@@ -61,8 +61,6 @@ export default class Objects {
 
         this.objectGroup.children.iterate(object => {
 
-            console.log('Arvore: ')
-
             colliders.children.iterate((collider) => {
 
                 scene.physics.add.collider(object, collider)

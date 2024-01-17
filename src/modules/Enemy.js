@@ -41,8 +41,6 @@ export default class Enemy {
 
         })
 
-        console.log(this.enemyGroup)
-        //this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
 
         if (this.inBattle) {
 
@@ -311,8 +309,8 @@ export default class Enemy {
         }
 
         enemy.isAlive = false
-        enemy.sprite.clearTint()
-        enemy.sprite.body.destroy()
+        enemy.clearTint()
+        enemy.body.destroy()
         enemy.npcText.destroy()
 
         this.scene.deathSound.play()

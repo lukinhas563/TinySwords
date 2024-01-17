@@ -28,7 +28,7 @@ export default class Player {
         this.createAnimate(scene, stringSprite)
 
         //ATTACK
-        this.possibleattack = [scene.citizen, scene.goblin]
+        this.possibleattack = [scene.citizen, scene.goblin.enemyGroup]
         this.attackDelay = 300
         this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
