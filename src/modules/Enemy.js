@@ -251,6 +251,7 @@ export default class Enemy {
         if (distance <= 100 && !enemy.isAttacking && !enemy.isVulnerability) {
 
             enemy.isAttacking = true
+
             enemy.setVelocityX(0);
             enemy.setVelocityY(0);
 
@@ -258,17 +259,18 @@ export default class Enemy {
             enemy.anims.play(this.stringSprite + 'attack', true)
 
             //ATTACK
+
             this.possibleattack = this.scene.player.sprite
 
-            // this.attackTimer.paused = false
 
-            this.scene.time.delayedCall(700, () => {
+            enemy.attackTimer.paused = false
+
+            this.scene.time.delayedCall(600, () => {
 
                 enemy.isAttacking = false
                 this.restartTimerAttack(enemy)
 
             })
-
 
         } else if (distance > 100 && !enemy.isAttacking && !enemy.isVulnerability) {
 
@@ -293,8 +295,8 @@ export default class Enemy {
 
     restartTimerAttack(enemy) {
 
-        this.attackTimer = this.scene.time.addEvent({
-            delay: this.attackDelay,
+        enemy.attackTimer = this.scene.time.addEvent({
+            delay: enemy.attackDelay,
             callback: () => handleAttackEnemy(this.scene, enemy, this.scene.player.sprite),
             loop: false,
             paused: true

@@ -10,6 +10,8 @@ const handleAttack = (scene, attacker, targets) => {
 
     if (!attacked && spacePressed) {
 
+        attacked = true
+
         const attackHitBox = scene.add.rectangle(0, 0, 80, 110)
         scene.physics.add.existing(attackHitBox)
 
@@ -44,11 +46,13 @@ const handleAttack = (scene, attacker, targets) => {
         })
 
 
-        scene.time.addEvent({
-            delay: attackDelay,
-            callback: attack(scene, attackHitBox, attacker, attacked, targets),
-            loop: false,
-            paused: true
+        scene.time.delayedCall(0, () => {
+            attack(scene, attackHitBox, attacker, attacked, targets)
+        })
+
+
+        scene.time.delayedCall(100, () => {
+            attacked = false
         })
 
     }
@@ -126,20 +130,24 @@ const attack = (scene, attackHitBox, attacker, attacked, targets) => {
 
     attackHitBox.y = attacker.y - attacker.height * 0.1
 
+
     scene.time.delayedCall(100, () => {
 
         attackHitBox.body.enable = false
         scene.swingSound.play()
         scene.physics.world.remove(attackHitBox.body)
-
         attacked = false;
+        console.log(attacked)
 
     }, [], this)
 
 
     scene.time.addEvent({
         delay: 600,
-        callback: () => { handleAttack(scene, attacker, targets) },
+        callback: () => {
+
+            handleAttack(scene, attacker, targets)
+        },
         loop: false,
     })
 

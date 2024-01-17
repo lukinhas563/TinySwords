@@ -1,12 +1,12 @@
 import Phaser from "phaser";
 
 let attacked = false
-const attackDelay = 300
+const attackDelay = 100
 
 const handleAttackEnemy = (scene, attacker, target) => {
 
     if (!attacked) {
-
+        console.log('ATAQUE')
         const enemyAttackHitbox = scene.add.rectangle(0, 0, 80, 110)
         scene.physics.add.existing(enemyAttackHitbox)
 
@@ -15,11 +15,8 @@ const handleAttackEnemy = (scene, attacker, target) => {
 
         scene.physics.add.overlap(enemyAttackHitbox, target, () => handleOverlap(target, scene, attacker))
 
-        scene.time.addEvent({
-            delay: attackDelay,
-            callback: attack(scene, enemyAttackHitbox, attacker, attacked, target),
-            loop: false,
-            paused: true
+        scene.time.delayedCall(attackDelay, () => {
+            attack(scene, enemyAttackHitbox, attacker, attacked, target)
         })
 
     }
@@ -54,6 +51,7 @@ const handleOverlap = (target, scene, attacker) => {
 
 const attack = (scene, attackHitBox, attacker, attacked, target) => {
 
+
     scene.physics.world.add(attackHitBox.body)
 
     if (attacker.flipX) {
@@ -68,15 +66,17 @@ const attack = (scene, attackHitBox, attacker, attacked, target) => {
 
     attackHitBox.y = attacker.y - attacker.height * 0.1
 
+
+
     scene.time.delayedCall(100, () => {
 
         attackHitBox.body.enable = false
         scene.physics.world.remove(attackHitBox.body)
 
-        attacked = false;
+        attacked = false
+
 
     }, [], this)
-
 
 }
 
