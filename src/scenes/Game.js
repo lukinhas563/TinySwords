@@ -119,13 +119,12 @@ export default class Game extends Phaser.Scene {
         this.player.createCollision(this, this.citizen.sprite)
         this.player.createCollision(this, this.goblin.sprite)
 
-        // Este é um grupo em colisão, portanto os objetos dentro deste Grupo sempre colidirão:
-
         this.citizen.createCollision(this, this.colliders)
         this.goblin.createCollision(this, this.colliders)
 
-        // this.trees.createCollision(this, this.goblin.sprite)
-        // this.trees.createCollision(this, this.player.sprite)
+        this.trees.createCollision(this, this.player.sprite)
+        this.trees.createCollision(this, this.goblin.sprite)
+
 
         /* this.houses.createCollision(this, this.player.sprite,)*/
 
