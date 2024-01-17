@@ -46,13 +46,11 @@ export default class Game extends Phaser.Scene {
         map.createLayer('Bridge', tileBridge)
         map.createLayer('Elevation1', tileElevation)
         map.createLayer('Grass1', tileGround)
-        map.createLayer('Castle', tileCastle)
         map.createLayer('Details', tileGround)
         map.createLayer('DetailsRocks', tileRocks)
         map.createLayer('DetailsRocks1', tileRocks1)
         map.createLayer('DetailsRocks2', tileRocks2)
         map.createLayer('DetailsRocks3', tileRocks3)
-
         map.createLayer('Brushes', tileBrushes)
         this.collider = map.createLayer('Collision', tileCollider).setAlpha(0)
         this.collider1 = map.createLayer('Collision1', tileCollider1).setAlpha(0)
@@ -109,6 +107,18 @@ export default class Game extends Phaser.Scene {
         }
         this.houses = new Objects(this, map, 'HouseSpawn', 'house', houseConfig.sizeX, houseConfig.sizeY, houseConfig.originX, houseConfig.originY, houseConfig.offsetX, houseConfig.offsetY, houseConfig.animations)
 
+        const castleConfig = {
+            sizeX: 270,
+            sizeY: 100,
+            originX: 0.5,
+            originY: 0.7,
+            offsetX: 25,
+            offsetY: 140,
+            animations: false
+        }
+        this.castles = new Objects(this, map, 'CastleSpawn', 'castle', castleConfig.sizeX, castleConfig.sizeY, castleConfig.originX, castleConfig.originY, castleConfig.offsetX, castleConfig.offsetY, castleConfig.animations)
+
+
         //COLLISION
         this.collider.setCollisionByProperty({ collider: true })
         this.collider1.setCollisionByProperty({ collider: true })
@@ -124,7 +134,15 @@ export default class Game extends Phaser.Scene {
 
         this.trees.createCollision(this, this.player.sprite)
         this.trees.createCollision(this, this.goblin.sprite)
+        this.trees.createCollision(this, this.citizen.sprite)
 
+        this.houses.createCollision(this, this.player.sprite)
+        this.houses.createCollision(this, this.goblin.sprite)
+        this.houses.createCollision(this, this.citizen.sprite)
+
+        this.castles.createCollision(this, this.player.sprite)
+        this.castles.createCollision(this, this.goblin.sprite)
+        this.castles.createCollision(this, this.citizen.sprite)
 
         /* this.houses.createCollision(this, this.player.sprite,)*/
 
@@ -157,10 +175,10 @@ export default class Game extends Phaser.Scene {
         this.trees.createMoviment()
 
         //FOREGROUND
-        /*this.children.each(c => {
+        this.children.each(c => {
             const child = c
             child.setDepth(child.y)
-        })*/
+        })
 
     }
 }

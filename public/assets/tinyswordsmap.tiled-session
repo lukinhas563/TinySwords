@@ -16,11 +16,11 @@
             "scaleInEditor": 1
         },
         "tinyswordsmap.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 11,
+            "scale": 0.5,
+            "selectedLayer": 15,
             "viewCenter": {
-                "x": 1664.6666666666665,
-                "y": 545.3333333333333
+                "x": 656,
+                "y": 571
             }
         },
         "tinyswordsmap.tmx#Bridge": {

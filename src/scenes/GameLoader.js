@@ -21,6 +21,7 @@ export default class GameLoader extends Phaser.Scene {
         //OBJECTS
         this.load.spritesheet('trees', 'assets/Tiny Swords (Update 010)/Resources/Trees/Tree.png', { frameWidth: 192, frameHeight: 192 })
         this.load.image('house', 'assets/Tiny Swords (Update 010)/Factions/Knights/Buildings/House/House_Blue.png')
+        this.load.image('castle', 'assets/Tiny Swords (Update 010)/Factions/Knights/Buildings/Castle/Castle_Blue.png')
 
         //MAP
         this.load.image('water', 'assets/Tiny Swords (Update 010)/Terrain/Water/Water.png')
@@ -29,7 +30,6 @@ export default class GameLoader extends Phaser.Scene {
         this.load.image('elevation', 'assets/Tiny Swords (Update 010)/Terrain/Ground/Tilemap_Elevation.png')
         this.load.image('bridge', 'assets/Tiny Swords (Update 010)/Terrain/Bridge/Bridge_All.png')
         this.load.image('houses', 'assets/Tiny Swords (Update 010)/Factions/Knights/Buildings/House/House_Blue.png')
-        this.load.image('castle', 'assets/Tiny Swords (Update 010)/Factions/Knights/Buildings/Castle/Castle_Blue.png')
         this.load.image('collider', 'assets/Tiny Swords (Update 010)/Terrain/Collider.png')
         this.load.image('rocks', 'assets/Tiny Swords (Update 010)/Terrain/Water/Rocks/Rocks_04.png')
         this.load.image('rocks1', 'assets/Tiny Swords (Update 010)/Terrain/Water/Rocks/Rocks_03.png')
@@ -37,7 +37,6 @@ export default class GameLoader extends Phaser.Scene {
         this.load.image('rocks3', 'assets/Tiny Swords (Update 010)/Deco/04.png')
         this.load.image('brushes', 'assets/Tiny Swords (Update 010)/Deco/09.png')
         this.load.image('colliderHelf', 'assets/Tiny Swords (Update 010)/Terrain/Collider_Min.png')
-
         this.load.tilemapTiledJSON('map', 'assets/map.json')
 
         //SOUNDS

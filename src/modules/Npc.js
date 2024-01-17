@@ -18,7 +18,7 @@ export default class Npc {
 
         //CREATED SPRITE
         this.sprite = scene.physics.add.sprite(posX, posY, stringSprite).setSize(50, 30).setOffset(70, 90)
-        this.sprite.setImmovable(true)
+        this.sprite.setPushable(false)
 
         this.scene.time.addEvent({
             delay: 3000,
