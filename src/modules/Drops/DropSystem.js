@@ -15,7 +15,7 @@ const DropSystem = (scene, posX, posY) => {
             new Meat(scene, posX, posY, 'meat', 'meatspawn')
             break;
         default:
-
+            new Gold(scene, posX, posY, 'gold', 'goldspawn')
     }
 
 }
