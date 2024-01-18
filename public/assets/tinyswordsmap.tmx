@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="37" nextobjectid="35">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="64" tileheight="64" infinite="0" nextlayerid="38" nextobjectid="40">
  <editorsettings>
   <export target="map.json" format="json"/>
  </editorsettings>
@@ -737,6 +737,23 @@
    <point/>
   </object>
   <object id="34" x="970.667" y="569.333">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="37" name="TreeSpawn2">
+  <object id="35" x="1218.67" y="453.333">
+   <point/>
+  </object>
+  <object id="36" x="1349.33" y="317.333">
+   <point/>
+  </object>
+  <object id="37" x="1392" y="400">
+   <point/>
+  </object>
+  <object id="38" x="1349.33" y="537.333">
+   <point/>
+  </object>
+  <object id="39" x="1060" y="914.667">
    <point/>
   </object>
  </objectgroup>

@@ -7,6 +7,7 @@ import Objects from "../modules/Objects"
 import Enemy from "../modules/Enemy"
 import Gold from "../modules/Drops/Gold"
 import Meat from "../modules/Drops/Meat"
+import Objects2 from "../modules/Objects2"
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -132,6 +133,17 @@ export default class Game extends Phaser.Scene {
             animations: false
         }
         this.bigBrush = new Objects(this, map, 'BrushSpawn', 'bigbrush', brushConfig.sizeX, brushConfig.sizeY, brushConfig.originX, brushConfig.originY, brushConfig.offsetX, brushConfig.offsetY, brushConfig.animations)
+
+        const tree2Config = {
+            sizeX: 30,
+            sizeY: 30,
+            originX: 0.5,
+            originY: 0.7,
+            offsetX: 80,
+            offsetY: 150,
+            animations: false
+        }
+        this.tree2 = new Objects2(this, map, 'TreeSpawn2', 'trees', tree2Config.sizeX, tree2Config.sizeY, tree2Config.originX, tree2Config.originY, tree2Config.offsetX, tree2Config.offsetY, tree2Config.animations)
 
         //COLLISION
         this.collider.setCollisionByProperty({ collider: true })
