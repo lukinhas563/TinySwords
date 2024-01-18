@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 
 import GameLoader from './src/scenes/GameLoader'
 import Game from './src/scenes/Game'
+import GameUI from './src/scenes/GameUI'
 
 const tinyswords = document.querySelector('.tinyswords')
 
@@ -18,7 +19,7 @@ const config = {
       debug: true
     }
   },
-  scene: [GameLoader, Game]
+  scene: [GameLoader, Game, GameUI]
 }
 
 const game = new Phaser.Game(config)

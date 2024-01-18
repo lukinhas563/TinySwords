@@ -170,8 +170,8 @@ export default class Game extends Phaser.Scene {
         this.castles.createCollision(this, this.goblin.sprite)
         this.castles.createCollision(this, this.citizen.sprite)
 
-        /* this.houses.createCollision(this, this.player.sprite,)*/
-
+        //UI
+        this.events.emit('playerData', this.player)
 
         //CAMERA
         const mapWidth = 1920;
