@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tinyswordsmap.tmx",
+    "activeFile": "UImap.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -15,12 +15,30 @@
         "#Water": {
             "scaleInEditor": 1
         },
-        "tinyswordsmap.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 14,
+        "UImap.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 1010.6666666666666,
-                "y": 733.3333333333333
+                "x": 352,
+                "y": 124
+            }
+        },
+        "UImap.tmx#Banner_Horizontal": {
+            "scaleInDock": 1
+        },
+        "UImap.tmx#Carved_3Slides": {
+            "scaleInDock": 1
+        },
+        "tinyswordsmap.tmx": {
+            "expandedObjectLayers": [
+                37,
+                36
+            ],
+            "scale": 0.75,
+            "selectedLayer": 22,
+            "viewCenter": {
+                "x": 842.6666666666666,
+                "y": 898.6666666666667
             }
         },
         "tinyswordsmap.tmx#Bridge": {
@@ -84,23 +102,26 @@
         }
     },
     "last.exportedFilePath": "C:/Users/Pichau/Desktop/TinySwords/public/assets",
-    "last.imagePath": "C:/Users/Pichau/Desktop/TinySwords/public/assets/Tiny Swords (Update 010)/Terrain",
+    "last.imagePath": "C:/Users/Pichau/Desktop/TinySwords/public/assets/Tiny Swords (Update 010)/Resources/Resources",
+    "map.height": 15,
     "map.lastUsedExportFilter": "Ficheiros de mapa JSON (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 64,
     "map.tileWidth": 64,
     "map.width": 20,
     "openFiles": [
-        "tinyswordsmap.tmx"
+        "tinyswordsmap.tmx",
+        "UImap.tmx"
     ],
     "project": "tinyswordsmap.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "tinyswordsmap.tmx"
+        "tinyswordsmap.tmx",
+        "UImap.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
         "height": 64,
-        "width": 16
+        "width": 64
     }
 }
