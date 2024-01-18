@@ -1,10 +1,12 @@
-import Phaser from "phaser";
-import AnimatedTiles from "phaser-animated-tiles-phaser3.5";
+import Phaser from "phaser"
+import AnimatedTiles from "phaser-animated-tiles-phaser3.5"
 
-import Player from "../modules/Player";
-import Npc from "../modules/Npc";
-import Objects from "../modules/Objects";
-import Enemy from "../modules/Enemy";
+import Player from "../modules/Player"
+import Npc from "../modules/Npc"
+import Objects from "../modules/Objects"
+import Enemy from "../modules/Enemy"
+import Gold from "../modules/Drops/Gold"
+import Meat from "../modules/Drops/Meat"
 
 export default class Game extends Phaser.Scene {
     constructor() {
@@ -71,6 +73,9 @@ export default class Game extends Phaser.Scene {
         this.torchSwing = this.sound.add('torchswing')
         this.torchSwing.loop = false
 
+        this.goldAppear = this.sound.add('goldappear')
+        this.goldAppear.loop = false
+
         this.mainBattle = this.sound.add('mainbattle')
         this.mainBattle.loop = true
         this.mainBattle.play()
@@ -117,6 +122,9 @@ export default class Game extends Phaser.Scene {
             animations: false
         }
         this.castles = new Objects(this, map, 'CastleSpawn', 'castle', castleConfig.sizeX, castleConfig.sizeY, castleConfig.originX, castleConfig.originY, castleConfig.offsetX, castleConfig.offsetY, castleConfig.animations)
+
+        this.gold = new Gold(this, 500, 500, 'gold', 'goldspawn')
+        this.meat = new Meat(this, 500, 550, 'meat', 'meatspawn')
 
 
         //COLLISION
@@ -175,10 +183,10 @@ export default class Game extends Phaser.Scene {
         this.trees.createMoviment()
 
         //FOREGROUND
-        /*this.children.each(c => {
+        this.children.each(c => {
             const child = c
             child.setDepth(child.y)
-        })*/
+        })
 
     }
 }

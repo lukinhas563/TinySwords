@@ -13,6 +13,7 @@ export default class Player {
 
         //STATUS
         this.health = 100
+        this.gold = 0
         this.isAlive = true
         this.isVulnerability = false
         this.control = this.scene.input.keyboard.createCursorKeys()
@@ -162,18 +163,22 @@ export default class Player {
 
     status() {
 
-        if (this.playerText) {
+        if (this.playerText && this.playerText2) {
             this.playerText.destroy();
+            this.playerText2.destroy()
         }
 
         if (this.health > 0) {
 
             this.playerText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
-            this.playerText.setOrigin(0.5, 1)
+            this.playerText.setOrigin(0.5, 2)
 
+            this.playerText2 = this.scene.add.text(this.posX, this.posY, `Gold: ${this.gold}`, { fontSize: '30px', fill: '#fff' })
+            this.playerText2.setOrigin(0.5, 1)
 
-            if (this.playerText) {
+            if (this.playerText && this.playerText2) {
                 this.playerText.setPosition(this.sprite.x, this.sprite.y - 50);
+                this.playerText2.setPosition(this.sprite.x, this.sprite.y - 50)
             }
 
         } else {

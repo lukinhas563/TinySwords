@@ -18,10 +18,15 @@ export default class GameLoader extends Phaser.Scene {
         //ENEMYS
         this.load.spritesheet('goblin_torch', 'assets/Tiny Swords (Update 010)/Factions/Goblins/Troops/Torch/Red/Torch_Red.png', { frameWidth: 192, frameHeight: 192 })
         this.load.spritesheet('death', 'assets/Tiny Swords (Update 010)/Factions/Knights/Troops/Dead/Dead.png', { frameWidth: 128, frameHeight: 128 })
+
         //OBJECTS
         this.load.spritesheet('trees', 'assets/Tiny Swords (Update 010)/Resources/Trees/Tree.png', { frameWidth: 192, frameHeight: 192 })
         this.load.image('house', 'assets/Tiny Swords (Update 010)/Factions/Knights/Buildings/House/House_Blue.png')
         this.load.image('castle', 'assets/Tiny Swords (Update 010)/Factions/Knights/Buildings/Castle/Castle_Blue.png')
+        this.load.spritesheet('gold', 'assets/Tiny Swords (Update 010)/Resources/Resources/G_Idle_(NoShadow).png', { frameWidth: 128, frameHeight: 128 })
+        this.load.spritesheet('goldspawn', 'assets/Tiny Swords (Update 010)/Resources/Resources/G_Spawn.png', { frameWidth: 128, frameHeight: 128 })
+        this.load.spritesheet('meat', 'assets/Tiny Swords (Update 010)/Resources/Resources/M_Idle_(NoShadow).png', { frameWidth: 128, frameHeight: 128 })
+        this.load.spritesheet('meatspawn', 'assets/Tiny Swords (Update 010)/Resources/Resources/M_Spawn.png', { frameWidth: 128, frameHeight: 128 })
 
         //MAP
         this.load.image('water', 'assets/Tiny Swords (Update 010)/Terrain/Water/Water.png')
@@ -45,6 +50,7 @@ export default class GameLoader extends Phaser.Scene {
         this.load.audio('deathsound', 'assets/sounds/Glyph Activation Light 01.wav')
         this.load.audio('mainbattle', 'assets/sounds/Arcade - Battle Network.ogg')
         this.load.audio('torchswing', 'assets/sounds/fireball-whoosh-1-179125.mp3')
+        this.load.audio('goldappear', 'assets/sounds/UI Message Appear 01.wav')
 
         this.load.on('complete', () => {
             this.scene.start('Game')

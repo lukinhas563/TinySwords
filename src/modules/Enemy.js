@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 
 import handleAttackEnemy from "./AttackEnemy";
+import DropSystem from "./Drops/DropSystem";
 
 export default class Enemy {
 
@@ -112,6 +113,8 @@ export default class Enemy {
             scene.physics.add.collider(enemy, collider)
 
         })
+
+        this.scene.physics.add.collider(this.enemyGroup, this.enemyGroup, null)
 
     }
 
@@ -320,6 +323,7 @@ export default class Enemy {
 
         this.scene.time.delayedCall(1300, () => {
 
+            DropSystem(this.scene, enemy.x, enemy.y)
             enemy.destroy()
 
         }, [], this)
