@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "UImap.tmx",
+    "activeFile": "tinyswordsmap.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -19,8 +19,8 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 352,
-                "y": 124
+                "x": 845,
+                "y": 479.5
             }
         },
         "UImap.tmx#Banner_Horizontal": {
@@ -35,10 +35,10 @@
                 36
             ],
             "scale": 0.75,
-            "selectedLayer": 22,
+            "selectedLayer": 16,
             "viewCenter": {
-                "x": 842.6666666666666,
-                "y": 898.6666666666667
+                "x": 1376,
+                "y": 1033.3333333333333
             }
         },
         "tinyswordsmap.tmx#Bridge": {
@@ -116,8 +116,8 @@
     "project": "tinyswordsmap.tiled-project",
     "property.type": "bool",
     "recentFiles": [
-        "tinyswordsmap.tmx",
-        "UImap.tmx"
+        "UImap.tmx",
+        "tinyswordsmap.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {

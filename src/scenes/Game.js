@@ -73,6 +73,9 @@ export default class Game extends Phaser.Scene {
         this.goldAppear = this.sound.add('goldappear')
         this.goldAppear.loop = false
 
+        this.running = this.sound.add('running')
+        this.running.loop = false
+
         this.mainBattle = this.sound.add('mainbattle')
         this.mainBattle.loop = true
         this.mainBattle.play()
@@ -120,9 +123,6 @@ export default class Game extends Phaser.Scene {
         }
         this.castles = new Objects(this, map, 'CastleSpawn', 'castle', castleConfig.sizeX, castleConfig.sizeY, castleConfig.originX, castleConfig.originY, castleConfig.offsetX, castleConfig.offsetY, castleConfig.animations)
 
-        this.gold = new Gold(this, 500, 500, 'gold', 'goldspawn')
-        this.meat = new Meat(this, 500, 550, 'meat', 'meatspawn')
-
         const brushConfig = {
             sizeX: 64,
             sizeY: 64,
@@ -144,6 +144,29 @@ export default class Game extends Phaser.Scene {
             animations: false
         }
         this.tree2 = new Objects2(this, map, 'TreeSpawn2', 'trees', tree2Config.sizeX, tree2Config.sizeY, tree2Config.originX, tree2Config.originY, tree2Config.offsetX, tree2Config.offsetY, tree2Config.animations)
+
+        const bigpumpkinConfig = {
+            sizeX: 64,
+            sizeY: 64,
+            originX: 0,
+            originY: 0,
+            offsetX: 0,
+            offsetY: 0,
+            animations: false
+        }
+        this.bigpumpkin = new Objects2(this, map, 'BigPumpkinSpawn', 'bigpumpkin', bigpumpkinConfig.sizeX, bigpumpkinConfig.sizeY, bigpumpkinConfig.originX, bigpumpkinConfig.originY, bigpumpkinConfig.offsetX, bigpumpkinConfig.offsetY, bigpumpkinConfig.animations)
+
+        const smallpumpkinConfig = {
+            sizeX: 64,
+            sizeY: 64,
+            originX: 0,
+            originY: 0,
+            offsetX: 0,
+            offsetY: 0,
+            animations: false
+        }
+        this.smallpumpkin = new Objects2(this, map, 'SmallPumpkinSpawn', 'smallpumpkin', smallpumpkinConfig.sizeX, smallpumpkinConfig.sizeY, smallpumpkinConfig.originX, smallpumpkinConfig.originY, smallpumpkinConfig.offsetX, smallpumpkinConfig.offsetY, smallpumpkinConfig.animations)
+
 
         //COLLISION
         this.collider.setCollisionByProperty({ collider: true })

@@ -28,6 +28,8 @@ export default class GameLoader extends Phaser.Scene {
         this.load.spritesheet('meat', 'assets/Tiny Swords (Update 010)/Resources/Resources/M_Idle_(NoShadow).png', { frameWidth: 128, frameHeight: 128 })
         this.load.spritesheet('meatspawn', 'assets/Tiny Swords (Update 010)/Resources/Resources/M_Spawn.png', { frameWidth: 128, frameHeight: 128 })
         this.load.image('bigbrush', 'assets/Tiny Swords (Update 010)/Deco/09.png')
+        this.load.image('bigpumpkin', 'assets/Tiny Swords (Update 010)/Deco/13.png')
+        this.load.image('smallpumpkin', 'assets/Tiny Swords (Update 010)/Deco/12.png')
 
         //MAP
         this.load.image('water', 'assets/Tiny Swords (Update 010)/Terrain/Water/Water.png')
@@ -52,6 +54,7 @@ export default class GameLoader extends Phaser.Scene {
         this.load.audio('mainbattle', 'assets/sounds/Arcade - Battle Network.ogg')
         this.load.audio('torchswing', 'assets/sounds/fireball-whoosh-1-179125.mp3')
         this.load.audio('goldappear', 'assets/sounds/UI Message Appear 01.wav')
+        this.load.audio('running', 'assets/sounds/running-in-grass-6237.mp3')
 
         this.load.on('complete', () => {
             this.scene.start('Game')

@@ -124,7 +124,6 @@ export default class Player {
 
         } else if (this.control.space.isUp) {
 
-
             this.sprite.setVelocityX(0)
             this.sprite.setVelocityY(0)
             this.sprite.anims.play('idle', true)
@@ -140,6 +139,7 @@ export default class Player {
 
             return
         }
+
 
     }
 
