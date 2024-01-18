@@ -6,7 +6,7 @@ const attackDelay = 100
 const handleAttackEnemy = (scene, attacker, target) => {
 
     if (!attacked) {
-        console.log('ATAQUE')
+
         const enemyAttackHitbox = scene.add.rectangle(0, 0, 80, 110)
         scene.physics.add.existing(enemyAttackHitbox)
 

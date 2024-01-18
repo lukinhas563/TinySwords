@@ -189,7 +189,6 @@ export default class Player {
         this.sprite.setVelocityY(0)
 
         this.sprite.body.destroy()
-        this.playerText.destroy()
 
         this.scene.deathSound.play()
         this.sprite.anims.play('death', true)

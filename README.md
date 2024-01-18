@@ -1,2 +1,3 @@
-# TinySwords-Game
+# TinySwords
+
  Game made with Phaser js
