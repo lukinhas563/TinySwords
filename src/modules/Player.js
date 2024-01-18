@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import handleAttack from "./Attack";
+import PlayerAttack from "./PlayerAttack";
 
 export default class Player {
 
@@ -32,7 +32,7 @@ export default class Player {
         this.attackDelay = 300
         this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
-            callback: () => handleAttack(this.scene, this.sprite, this.possibleattack),
+            callback: () => new PlayerAttack(this.scene, this.sprite, this.possibleattack),
             loop: false,
             paused: true
         })
@@ -146,7 +146,7 @@ export default class Player {
 
         this.attackTimer = this.scene.time.addEvent({
             delay: this.attackDelay,
-            callback: () => handleAttack(this.scene, this.sprite, this.possibleattack),
+            callback: () => new PlayerAttack(this.scene, this.sprite, this.possibleattack),
             callbackScope: this,
             loop: false,
             paused: true
