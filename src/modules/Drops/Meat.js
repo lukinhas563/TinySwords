@@ -63,7 +63,13 @@ export default class Meat {
         scene.physics.add.overlap(this.sprite, scene.player.sprite, () => {
 
             scene.goldAppear.play()
-            scene.player.health += 10
+
+            if (scene.player.health < 90) {
+                scene.player.health += 10
+            } else {
+                scene.player.health = 100
+            }
+
             this.sprite.destroy()
 
         })

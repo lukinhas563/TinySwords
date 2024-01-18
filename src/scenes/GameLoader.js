@@ -27,6 +27,7 @@ export default class GameLoader extends Phaser.Scene {
         this.load.spritesheet('goldspawn', 'assets/Tiny Swords (Update 010)/Resources/Resources/G_Spawn.png', { frameWidth: 128, frameHeight: 128 })
         this.load.spritesheet('meat', 'assets/Tiny Swords (Update 010)/Resources/Resources/M_Idle_(NoShadow).png', { frameWidth: 128, frameHeight: 128 })
         this.load.spritesheet('meatspawn', 'assets/Tiny Swords (Update 010)/Resources/Resources/M_Spawn.png', { frameWidth: 128, frameHeight: 128 })
+        this.load.image('bigbrush', 'assets/Tiny Swords (Update 010)/Deco/09.png')
 
         //MAP
         this.load.image('water', 'assets/Tiny Swords (Update 010)/Terrain/Water/Water.png')

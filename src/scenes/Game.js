@@ -28,13 +28,10 @@ export default class Game extends Phaser.Scene {
         const tileGround = map.addTilesetImage('Grass', 'ground')
         const tileElevation = map.addTilesetImage('Elevation', 'elevation')
         const tileBridge = map.addTilesetImage('Bridge', 'bridge')
-        const tileCastle = map.addTilesetImage('Castle_Blue', 'castle')
         const tileRocks = map.addTilesetImage('Rocks', 'rocks')
         const tileRocks1 = map.addTilesetImage('Rocks_1', 'rocks1')
         const tileRocks2 = map.addTilesetImage('Rocks_2', 'rocks2')
         const tileRocks3 = map.addTilesetImage('Rocks_3', 'rocks3')
-        const tileBrushes = map.addTilesetImage('Brushes', 'brushes')
-
         const tileCollider = map.addTilesetImage('Collider', 'collider')
         const tileCollider1 = map.addTilesetImage('Collider_Helf', 'colliderHelf')
 
@@ -53,7 +50,6 @@ export default class Game extends Phaser.Scene {
         map.createLayer('DetailsRocks1', tileRocks1)
         map.createLayer('DetailsRocks2', tileRocks2)
         map.createLayer('DetailsRocks3', tileRocks3)
-        map.createLayer('Brushes', tileBrushes)
         this.collider = map.createLayer('Collision', tileCollider).setAlpha(0)
         this.collider1 = map.createLayer('Collision1', tileCollider1).setAlpha(0)
 
@@ -126,6 +122,16 @@ export default class Game extends Phaser.Scene {
         this.gold = new Gold(this, 500, 500, 'gold', 'goldspawn')
         this.meat = new Meat(this, 500, 550, 'meat', 'meatspawn')
 
+        const brushConfig = {
+            sizeX: 64,
+            sizeY: 64,
+            originX: 0.5,
+            originY: 0.3,
+            offsetX: 0,
+            offsetY: 0,
+            animations: false
+        }
+        this.bigBrush = new Objects(this, map, 'BrushSpawn', 'bigbrush', brushConfig.sizeX, brushConfig.sizeY, brushConfig.originX, brushConfig.originY, brushConfig.offsetX, brushConfig.offsetY, brushConfig.animations)
 
         //COLLISION
         this.collider.setCollisionByProperty({ collider: true })
