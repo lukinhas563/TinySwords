@@ -223,7 +223,7 @@ export default class Enemy {
 
                 }
 
-                enemy.npcText = this.scene.add.text(enemy.posX, enemy.posY, `Helth: ${enemy.health}`, { fontSize: '30px', fill: '#fff' })
+                enemy.npcText = this.scene.add.text(enemy.posX, enemy.posY, `Health: ${enemy.health}`, { fontSize: '30px', fill: '#fff' })
                 enemy.npcText.setOrigin(0.5, 1)
 
                 if (enemy.npcText) {

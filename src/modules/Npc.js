@@ -139,12 +139,12 @@ export default class Npc {
     status() {
 
         if (this.npcText) {
-            this.npcText.destroy();  // Destruir o texto anterior para evitar sobreposição
+            this.npcText.destroy();
         }
         if (this.health > 0) {
 
 
-            this.npcText = this.scene.add.text(this.posX, this.posY, `Helth: ${this.health}`, { fontSize: '30px', fill: '#fff' })
+            this.npcText = this.scene.add.text(this.posX, this.posY, `Health: ${this.health}`, { fontSize: '30px', fill: '#fff' })
             this.npcText.setOrigin(0.5, 1)
 
             if (this.npcText) {
